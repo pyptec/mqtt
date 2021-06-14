@@ -1,0 +1,5 @@
+ACCESO AMAZON EC2 ==>
+LINK: https://aws.amazon.com/es/console/
+USUARIO: apps@security-access.com.com
+CONTRASEÑA: M01ses8o8o
+//*******************

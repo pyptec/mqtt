@@ -1,0 +1,25 @@
+'DEFINES-------------------------------------------------------------
+
+#define MQTT_DEBUG_PRINT 1
+#define MQTT_APP_CLIENT_ID "pypteclonuevoeniot"
+
+const RELE1_GPIO2		=PL_IO_NUM_2
+const RELE2_GPIO3		=PL_IO_NUM_3
+
+
+const MQTT_NAME="security"				'<<<<<<<<====== MQTT server login name
+const MQTT_PASSWORD ="1KL2p4Lw25stjgFf"				'<<<<<<<<====== MQTT server login password
+const OWN_IP="192.168.1.200"				'<<<<<<<<====== This is the IP address of this device
+const SUBSCRIBE_DEMO_GATEWAY="192.168.1.1"	'<<<<<<<<====== Gateway IP address
+const MQTT_SERVER_HOST="35.222.255.152"		'<<<<<<<<====== MQTT server IP
+
+const PAT_GREEN_BLINKING=	"G-~"			'opening TCP link to MQTT server
+const PAT_GREEN_ON=			"G~"			'server connection established
+
+'INCLUDES------------------------------------------------------------
+
+include "sock\trunk\sock.tbh"
+include "mqtt\trunk\mqtt.tbh"
+'DECLARATIONS--------------------------------------------------------
+
+declare connect_lost as no_yes

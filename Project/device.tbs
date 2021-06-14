@@ -1,0 +1,76 @@
+include "global.tbh"
+
+dim connect_lost as no_yes=NO
+declare sub mqtt_data(byref data as string)
+'====================================================================
+sub callback_mqtt_connect_ok()
+	pat.play(PAT_GREEN_ON,PL_PAT_CANINT)'led verde prendido
+	mqtt_sub("carullapoloclub/#",QOS_AT_MOST_ONCE) 'v1/devices/cliente1/# LED/#, QOS_AT_LEAST_ONCE
+end sub
+
+sub callback_mqtt_connect_lost()
+	pat.play(PAT_GREEN_BLINKING,PL_PAT_CANINT)
+	connect_lost=YES
+end sub
+
+sub callback_mqtt_notif(byref topic as string,byref data as string)
+	
+	
+	dim x as string
+	
+	x=mid(topic,17,7)
+	sys.debugprint("dato recivido "+x+chr(10)+chr(14))
+	'if x<>STR_LED then exit sub
+	
+	
+	 if x="entrada" then
+		io.num=RELE1_GPIO2
+		mqtt_data(data)
+	else if x="salida" then
+		io.num=RELE2_GPIO3
+		mqtt_data(data)
+	end if
+	
+	'if data ="1" then
+	'	 dim w as word
+	'	 dim y as byte
+	'	 w=sys.timercount
+	'	 io.state= HIGH
+	'	 y=0
+	'	 while y<1
+	'		if sys.timercount-w>1 then
+	'			y=2
+	'			io.state= LOW
+	'			mqtt_publish("carullapoloclub/text","barrera ok",QOS_AT_MOST_ONCE)
+	'			doevents
+	'		end if
+	'	wend
+	'	 
+	'else if data="0" then
+	'	 io.state=LOW
+	'end if
+end sub
+
+sub  callback_mqtt_sub_ok()
+end sub
+sub mqtt_data(byref data as string)
+	dim w as word
+	dim y as byte
+	if data ="1" then
+		
+		 w=sys.timercount
+		 io.state= HIGH
+		 y=0
+		 while y<1
+			if sys.timercount-w>1 then
+				y=2
+				io.state= LOW
+				mqtt_publish("carullapoloclub/text","barrera ok",QOS_AT_MOST_ONCE)
+				doevents
+			end if
+		wend
+		 
+	else if data="0" then
+		 io.state=LOW
+	end if
+end sub
